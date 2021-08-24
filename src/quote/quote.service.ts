@@ -10,7 +10,7 @@ export class QuoteService {
   ) {}
 
   async findAll(): Promise<Quote[]> {
-    return await this.model.find().exec();
+    return await this.model.find({}, { _id: 0 }).exec();
   }
 
   async create(author: string, quote: string): Promise<Quote> {
