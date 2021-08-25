@@ -4,8 +4,17 @@ networks:
     driver: bridge
 secrets:
   db_credentials:
-    file: ./.production.env
+    file: .production.env
 services:
+  app:
+    container_name: redes2-docker-front
+    image: redes2-docker-front:latest
+    build: ../redes2-docker-front/
+    restart: unless-stopped
+    ports:
+      - 3001:80
+    networks:
+      - server-network
   server:
     container_name: redes2-docker-back
     image: redes2-docker-back:latest
