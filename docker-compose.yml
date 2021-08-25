@@ -1,0 +1,34 @@
+version: '3.9'
+networks:
+  server-network:
+    driver: bridge
+secrets:
+  db_credentials:
+    file: ./.production.env
+services:
+  server:
+    container_name: redes2-docker-back
+    image: redes2-docker-back:latest
+    build: .
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    networks:
+      - server-network
+    secrets:
+      - db_credentials
+    env_file: # TODO: USE SECRET INSTEAD OF PLAIN .ENV FILE
+      - .production.env
+  db:
+    image: mongo:latest
+    container_name: redes2-docker-db
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    networks:
+      - server-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin

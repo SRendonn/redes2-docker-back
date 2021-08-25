@@ -1,0 +1,9 @@
+**/node_modules
+**/dist
+**/test
+**/docker-compose*
+**/Dockerfile
+**/.dockerignore
+**/.git
+**/.gitignore
+**/.env
