@@ -5,6 +5,8 @@ networks:
 secrets:
   db_credentials:
     file: .production.env
+volumes:
+  pictures:
 services:
   app:
     container_name: redes2-docker-front
@@ -15,6 +17,8 @@ services:
       - 3001:80
     networks:
       - server-network
+    volumes:
+      - pictures:/usr/share/nginx/html/images
   server:
     container_name: redes2-docker-back
     image: redes2-docker-back:latest
