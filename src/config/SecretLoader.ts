@@ -1,5 +1,5 @@
 // dependencies
-import fs from 'fs';
+import * as fs from 'fs';
 
 export const SecretLoader = {
   read(secretName: string): string | undefined {
