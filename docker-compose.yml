@@ -3,8 +3,10 @@ networks:
   server-network:
     driver: bridge
 secrets:
-  db_credentials:
-    file: .production.env
+  DB_USERNAME:
+    file: ./secrets/DB_USERNAME.secret.txt
+  DB_PASSWORD:
+    file: ./secrets/DB_PASSWORD.secret.txt
 volumes:
   pictures:
 services:
@@ -30,8 +32,6 @@ services:
       - db
     networks:
       - server-network
-    secrets:
-      - db_credentials
     env_file: # TODO: USE SECRET INSTEAD OF PLAIN .ENV FILE
       - .production.env
   db:
@@ -42,6 +42,9 @@ services:
       - 27017:27017
     networks:
       - server-network
+    secrets:
+      - DB_USERNAME
+      - DB_PASSWORD
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_ROOT_USERNAME_FILE=/run/secrets/DB_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/DB_PASSWORD
