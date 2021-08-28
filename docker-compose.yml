@@ -7,6 +7,10 @@ secrets:
     file: ./secrets/DB_USERNAME.secret.txt
   DB_PASSWORD:
     file: ./secrets/DB_PASSWORD.secret.txt
+  DB_HOST:
+    file: ./secrets/DB_HOST.secret.txt
+  DB_NAME:
+    file: ./secrets/DB_NAME.secret.txt
 volumes:
   pictures:
 services:
@@ -32,7 +36,12 @@ services:
       - db
     networks:
       - server-network
-    env_file: # TODO: USE SECRET INSTEAD OF PLAIN .ENV FILE
+    secrets:
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_HOST
+      - DB_NAME
+    env_file:
       - .production.env
   db:
     image: mongo:latest
